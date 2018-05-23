@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+        <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+        <style>
+            body {
+                font: 16px Helvetica;
+            }
+
+            .friends {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .friend {
+                width: 100px;
+                margin: 0 40px 40px 0;
+                text-align: center;
+            }
+
+            .friend img {
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 id="headerInfo"></h1>
+
+            <div id="results"></div>
+        </div>
+
+        <script id="user-template" type="text/x-handlebars-template">
+            <div class="friends">
+                {{#each items}}
+                <div class="friend">
+                    <img src="{{photo_100}}"/>
+                    <div>{{first_name}} {{last_name}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </script>
+        <script src="./script-6.js"></script>
+    </body>
+</html>
