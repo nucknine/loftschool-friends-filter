@@ -1,0 +1,15 @@
+/*
+font-size
+*/
+@mixin font-size($sizeValue: 1) {
+  font-size: ($sizeValue * 20) * 1px;
+  font-size: $sizeValue * 1.25rem;
+}
+
+/*
+bernier font
+*/
+
+@mixin bernier() {
+  font-family: 'bernier';
+}

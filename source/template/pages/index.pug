@@ -1,0 +1,19 @@
+extends ../_main-template
+
+block variables
+  - var title = 'Home page'
+
+block content
+  .container
+    #results.drop-zone
+      .new-item +
+    .drop-zone
+      .new-item +
+    script(id="user-template" type="text/x-handlebars-template")
+      .friends
+        | {{#each items}}
+        .item(draggable="true")
+          img(draggable="false" src="{{photo_100}}")
+          div
+            | {{first_name}} {{last_name}}          
+        | {{/each}}

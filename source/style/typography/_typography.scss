@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic');
+
+@font-face {
+  font-family: 'bernier';
+  src: url('../../fonts/BERNIERRegular-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  color: $main-font-color;
+  font-family: $main-font-roboto;
+  @include font-size(0.8);
+  line-height: $font__line-height-body;
+
+  @include adaptive(smart) {
+    @include font-size(1);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: .75em;
+  font-family: $main-font-roboto;
+  margin-bottom: .25em;
+  clear: both;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2.6em;
+}
+
+h3 {
+  font-size: 2.2em;
+}
+
+h4 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.8em;
+}
+
+h6 {
+  font-size: 1.6em;
+}

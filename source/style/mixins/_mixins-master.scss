@@ -1,0 +1,103 @@
+/*
+clearfix миксин плейсхолдер
+*/
+%clearfix {
+  &:after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+/*
+center element
+*/
+@mixin centered($axis: 'both') {
+  position: absolute;
+  @if $axis == 'both' {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if $axis == 'x' {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $axis == 'y' {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/*
+Fill element
+*/
+@mixin fill($color:red) {
+  background-color: $color;
+}
+
+/*
+Sizes for element
+*/
+
+@mixin size($w:100%, $h:auto) {
+  width: $w;
+  height: $h;
+}
+
+/*
+inline-block
+*/
+@mixin inline() {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/*
+shadow
+*/
+@mixin shadow() {
+  box-shadow: 0 10px 15px rgba(#000,0.4);
+}
+
+/*
+adaptive media
+*/
+
+@mixin adaptive($point) {
+  @if $point == smart {
+    @media only screen and (max-width: 480px) { @content; }
+  }
+  @else if $point == tablet {
+    @media only screen and (min-width: 481px) and (max-width: 1024px) { @content; }
+  }
+  @else if $point == pc {
+    @media only screen and (min-width: 1025px)  { @content; }
+  }
+}
+
+/*
+cols(n=3, m=10)
+margin-right m px
+width ((100% - (((@margin-right * n) / wrapper-width) * 100%)) / n)
+&:last-child
+margin-right 0px
+
+// Fonts mixin
+font-url(file)
+return '../fonts/' + file
+
+webfont(family, file, hack-chrome-windows = false, weight = 'normal')
+@font-face
+font-family family
+src url(font-url(file + '.eot'))
+src url(font-url(file + '.eot?#iefix')) format('embedded-opentype'),
+url(font-url(file + '.woff')) format('woff'),
+url(font-url(file + '.ttf')) format('truetype'),
+url(font-url(file + '.svg#'+ family)) format('svg')
+font-weight weight
+font-style normal
+if hack-chrome-windows
+@media screen and (-webkit-min-device-pixel-ratio:0)
+@font-face
+font-family family
+src url(font-url(file + '.svg#'+ family)) format('svg')
+*/

@@ -1,0 +1,17 @@
+.about {
+  &__left, &__right{
+    position: relative;
+    float: left;
+    width: 50%;
+  }
+  &__left {
+    background: $white;
+  }
+  &__right {
+    background: $beige;
+  }
+  &__triangles{
+    position: absolute;
+    bottom: 100%;
+  }
+}
