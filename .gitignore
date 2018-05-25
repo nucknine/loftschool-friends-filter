@@ -1,4 +1,4 @@
-# Numerous always-ignore extensions
+# Numerous always-ignore extensions*.lock
 *.bak
 *.diff
 *.err
