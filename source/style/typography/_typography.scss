@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic');
-
-@font-face {
-  font-family: 'bernier';
-  src: url('../../fonts/BERNIERRegular-Regular.otf');
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,500&amp;subset=cyrillic');
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -17,7 +10,7 @@ input,
 select,
 textarea {
   color: $main-font-color;
-  font-family: $main-font-roboto;
+  font-family: $main-font;
   @include font-size(0.8);
   line-height: $font__line-height-body;
 
@@ -28,7 +21,7 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: .75em;
-  font-family: $main-font-roboto;
+  font-family: $main-font;
   margin-bottom: .25em;
   clear: both;
   font-weight: normal;
