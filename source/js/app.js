@@ -59,14 +59,14 @@ auth()
         let counter = 0;
         let currentDrag;        
 
-        document.addEventListener('click', e => {
-            if (e.target.classList.contains('new-item')) {
-                const newItem = createItem();
-                const zone = getCurrentZone(e.target);
+        // document.addEventListener('click', e => {
+        //     if (e.target.classList.contains('new-item')) {
+        //         const newItem = createItem();
+        //         const zone = getCurrentZone(e.target);
 
-                zone.insertBefore(newItem, zone.lastElementChild)
-            }            
-        });
+        //         zone.insertBefore(newItem, zone.lastElementChild)
+        //     }            
+        // });
 
         document.addEventListener('dragstart', (e) => {
             const zone = getCurrentZone(e.target);
@@ -89,14 +89,15 @@ auth()
                 const zone = getCurrentZone(e.target);
 
                 e.preventDefault();
-
-                if (zone && currentDrag.startZone !== zone) {
-                    if (e.target.classList.contains('item')) {
-                        zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                    } else {
-                        zone.insertBefore(currentDrag.node, zone.lastElementChild);
-                    }
-                }
+                zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
+                
+                // if (zone && currentDrag.startZone !== zone) {
+                //     if (e.target.classList.contains('main__item')) {
+                //         zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
+                //     } else {
+                //         zone.insertBefore(currentDrag.node, zone.lastElementChild);
+                //     }
+                // }
 
                 currentDrag = null;
             }
@@ -114,7 +115,7 @@ auth()
 
         function getCurrentZone(from) {
             do {
-                if (from.classList.contains('drop-zone')) {
+                if (from.classList.contains('main__drop-zone')) {
                     return from;
                 }
             } while (from = from.parentElement);

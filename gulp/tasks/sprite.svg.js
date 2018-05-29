@@ -23,22 +23,22 @@ module.exports = function() {
       .pipe($.gp.svgSprite({
         mode: {
           symbol: {
-            sprite: "../../sprites/sprite.svg",
+            sprite: '../../sprites/sprite.svg',
             render: {
-                scss: {
+              scss: {
                   //куда нужно генерировать стили для спрайта
                   // Этот файл подключается в главный scss файл.
                   // Путь задается относительно файла sprite.svg, который был создан выше (в директории build)
-                  dest:'../../../../../source/style/common/_svgsprite.scss',
+                dest:'../../../../../source/style/common/_svgsprite.scss',
                   //код шаблона, на основе которого будут генерироваться стили для спрайта.
                   // Путь задается относительно корня
-                  template: "./source/style/common/_sprite_template.scss"
-                }
+                template: './source/style/common/_sprite_template.scss'
+              }
             }
           }
         }
       }))
       //переносим спрайт в директорию build
-      .pipe($.gulp.dest($.config.root + '/assets/img/icons'))
-  })
+      .pipe($.gulp.dest($.config.root + '/assets/img/icons'));
+  });
 };

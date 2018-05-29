@@ -3,22 +3,30 @@ extends ../_main-template
 block variables
   - var title = 'Home page'
 
-block content
-  .container
-    .header
-      .top
-      .filter-section
-        .left
-        .right
-    #results.drop-zone
-      .new-item +
-    .drop-zone
-      .new-item +
+block content  
+  +b.SECTION.box
+    +b.header
+      +e.title Выберите друзей
+          +icon('times')
+      +b.filter-section
+        +e.half        
+          +e.INPUT(type="text" placeholder="Начните вводить имя друга").input._left
+          +icon('search')
+        +e.half
+          +e.INPUT(type="text" placeholder="Название").input
+    +b.main
+      +e.half
+        +e.title Ваши друзья        
+        +e.drop-zone(id="results")
+      +e.half
+        +e.title Друзья в списке
+        +e.drop-zone
+    +b.footer
+      +e.BUTTON.button Сохранить      
     script(id="user-template" type="text/x-handlebars-template")
-      .friends
-        | {{#each items}}
-        .item(draggable="true")
-          img(draggable="false" src="{{photo_100}}")
-          div
-            | {{first_name}} {{last_name}}          
-        | {{/each}}
+      | {{#each items}}
+      .main__item(draggable="true")
+        img.main__img(draggable="false" src="{{photo_100}}")
+        div.main__name
+          | {{first_name}} {{last_name}}
+      | {{/each}}
