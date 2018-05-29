@@ -17,10 +17,10 @@ block content
     +b.main
       +e.half
         +e.title Ваши друзья        
-        +e.drop-zone(id="results")
+        +e.drop-zone(id="js-results")
       +e.half
         +e.title Друзья в списке
-        +e.drop-zone
+        +e.drop-zone(id="js-filter-zone")
     +b.footer
       +e.BUTTON.button Сохранить      
     script(id="user-template" type="text/x-handlebars-template")
@@ -29,4 +29,5 @@ block content
         img.main__img(draggable="false" src="{{photo_100}}")
         div.main__name
           | {{first_name}} {{last_name}}
+        +icon('plus')
       | {{/each}}

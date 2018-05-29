@@ -110,6 +110,7 @@
         border-bottom: 1px solid $gray;
     }
     &__item {
+        position: relative;
         margin-right: 6px;
         padding: 0 0;   
         display: flex;
@@ -123,6 +124,24 @@
         transition: all 0.3s ease-in-out;
         &:hover {
             background: $gray;
+        }
+        & .icon-plus {
+            position: absolute;
+            z-index: 999;
+            top: 21px;
+            right: 15px;
+            font-size: 18px;
+            color: $dark-gray;
+            cursor: pointer;
+        }
+        & .icon-times {
+            position: absolute;
+            z-index: 999;
+            top: 21px;
+            right: 15px;
+            font-size: 18px;
+            color: $dark-gray;
+            cursor: pointer;
         }
     }
     &__img {
