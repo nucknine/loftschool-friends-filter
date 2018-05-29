@@ -127,21 +127,33 @@
         }
         & .icon-plus {
             position: absolute;
-            z-index: 999;
+            z-index: 888;
             top: 21px;
             right: 15px;
             font-size: 18px;
             color: $dark-gray;
             cursor: pointer;
+            &:hover {
+                color: darken($color: $dark-gray, $amount: 20);
+            }
+            &:active {
+                color: darken($color: $dark-gray, $amount: 20);
+            }
         }
         & .icon-times {
             position: absolute;
-            z-index: 999;
+            z-index: 888;
             top: 21px;
             right: 15px;
             font-size: 18px;
             color: $dark-gray;
             cursor: pointer;
+            &:hover {
+                color: darken($color: $dark-gray, $amount: 20);
+            }
+            &:active {
+                color: darken($color: $dark-gray, $amount: 20);
+            }
         }
     }
     &__img {
@@ -165,7 +177,9 @@
     background: $gray;
     display: block;
     position: relative;
+    z-index: 999;
     &__button {
+        user-select: none;
         position: absolute;
         bottom: 8px;
         right: 8px;
@@ -181,5 +195,9 @@
         font-weight: 300;
         border: none;
         cursor: pointer;
+        &:hover {
+            background: white;
+            color: $orange;
+        }
     }
 }

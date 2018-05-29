@@ -1,39 +1,41 @@
+/* globals VK, Handlebars */
+
 (function() {
-'use strict';
+    'use strict';
 
 // svg4everybody();
 
-VK.init({
-    apiId: 6487685
-});
-
-function auth() {
-    return new Promise((resolve, reject) => {
-        VK.Auth.login(data => {
-            if (data.session) {
-                resolve();
-            } else {
-                reject(new Error('Не удалось авторизоваться'));
-            }
-        }, 2);
+    VK.init({
+        apiId: 6487685
     });
-}
 
-function callAPI(method, params) {
-    params.v = '5.76';
-
-    return new Promise((resolve, reject) => {
-        VK.api(method, params, (data) => {
-            if (data.error) {
-                reject(data.error);
-            } else {
-                resolve(data.response);
-            }
+    function auth() {
+        return new Promise((resolve, reject) => {
+            VK.Auth.login(data => {
+                if (data.session) {
+                    resolve();
+                } else {
+                    reject(new Error('Не удалось авторизоваться'));
+                }
+            }, 2);
         });
-    })
-}
+    }
 
-auth()    
+    function callAPI(method, params) {
+        params.v = '5.76';
+
+        return new Promise((resolve, reject) => {
+            VK.api(method, params, (data) => {
+                if (data.error) {
+                    reject(data.error);
+                } else {
+                    resolve(data.response);
+                }
+            });
+        })
+    }
+
+    auth()
     .then(() => {
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
@@ -44,14 +46,14 @@ auth()
         const results = document.querySelector('#js-results');
 
         results.innerHTML = html;
-    }).then(() => {
-        let counter = 0;
+    }).then(() => {        
         let currentDrag;        
 
         document.addEventListener('click', e => {
             if (e.target.parentElement.classList.contains('icon-plus')) {                
                 const item = e.target.parentElement.parentElement;
                 const filterZone = document.getElementById('js-filter-zone');
+
                 filterZone.insertBefore(item, filterZone.lastElementChild);
                 e.target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#times');
                 e.target.parentElement.classList.add('icon-times');
@@ -60,6 +62,7 @@ auth()
                 e.target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#plus');
                 const item = e.target.parentElement.parentElement;                              
                 const resultZone = document.getElementById('js-results');
+
                 resultZone.insertBefore(item, resultZone.lastElementChild);
                 e.target.parentElement.classList.add('icon-plus');
                 e.target.parentElement.classList.remove('icon-times');
@@ -88,28 +91,10 @@ auth()
 
                 e.preventDefault();
                 zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                
-                // if (zone && currentDrag.startZone !== zone) {
-                //     if (e.target.classList.contains('main__item')) {
-                //         zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                //     } else {
-                //         zone.insertBefore(currentDrag.node, zone.lastElementChild);
-                //     }
-                // }
-
+                               
                 currentDrag = null;
             }
         });
-
-        function createItem() {
-            const newDiv = document.createElement('div');
-
-            newDiv.textContent = counter++;
-            newDiv.classList.add('item');
-            newDiv.draggable = true;
-
-            return newDiv;
-        }
 
         function getCurrentZone(from) {
             do {
@@ -121,5 +106,4 @@ auth()
             return null;
         }
     });
-
 })();
