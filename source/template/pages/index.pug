@@ -10,10 +10,10 @@ block content
           +icon('times')
       +b.filter-section
         +e.half        
-          +e.INPUT(type="text" placeholder="Начните вводить имя друга").input._left
+          +e.INPUT(type="text" id="js-input-left" placeholder="Начните вводить имя друга").input._left
           +icon('search')
         +e.half
-          +e.INPUT(type="text" placeholder="Название").input
+          +e.INPUT(type="text" id="js-input-right" placeholder="Название").input
     +b.main
       +e.half
         +e.title Ваши друзья        
@@ -23,11 +23,19 @@ block content
         +e.drop-zone(id="js-filter-zone")
     +b.footer
       +e.BUTTON.button Сохранить      
-    script(id="user-template" type="text/x-handlebars-template")
+    script(id="template-left" type="text/x-handlebars-template")
       | {{#each items}}
       .main__item(draggable="true")
         img.main__img(draggable="false" src="{{photo_100}}")
         div.main__name
           | {{first_name}} {{last_name}}
         +icon('plus')
+      | {{/each}}
+    script(id="template-right" type="text/x-handlebars-template")
+      | {{#each items}}
+      .main__item(draggable="true")
+        img.main__img(draggable="false" src="{{photo_100}}")
+        div.main__name
+          | {{first_name}} {{last_name}}
+        +icon('times')
       | {{/each}}

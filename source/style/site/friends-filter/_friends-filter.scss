@@ -76,6 +76,7 @@
     font-size: 12px;
     height: 350px;
     display: flex;
+    flex-basis: 100%;
     &__half {
         padding: 0 5px 0 15px;   
         display: flex;
@@ -100,6 +101,7 @@
         }
     }
     &__title {
+        user-select: none;
         margin-right: 6px;
         padding: 10px 0 0 0;
         width: 100%;
