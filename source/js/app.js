@@ -9,6 +9,13 @@
         apiId: 6487685
     });
 
+    function loadState() {
+        let data = JSON.parse(storage.data);
+        
+        renderFriends(data.rightItems, filterZone);
+        renderFriends(data.leftItems);
+    }
+
     function auth() {
         return new Promise((resolve, reject) => {
             VK.Auth.login(data => {
@@ -61,8 +68,11 @@
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
     .then(response => {
-
-        renderFriends(response);        
+        if (storage.data) {
+            loadState();
+        } else {
+            renderFriends(response);   
+        }             
 
         return response;
     }).then((response) => {        
@@ -174,8 +184,9 @@
         }
 
         function saveState() {
-            let rightZoneItems = [];                
-                
+            let rightZoneItems = [];
+            let leftZoneItems = [];
+            
             for (let i = 0; filterZone.children.length > i; i++) {
                 let item = {
                     first_name: '',
@@ -188,9 +199,23 @@
                                         
                 rightZoneItems.push(item);
             }
+
+            for (let i = 0; resultZone.children.length > i; i++) {
+                let item = {
+                    first_name: '',
+                    last_name: '',
+                    photo_100: ''
+                };
+    
+                item.photo_100 = resultZone.children[i].querySelector('.main__img').getAttribute('src');
+                [item.first_name, item.last_name] = resultZone.children[i].querySelector('.main__name').textContent.split(' ');
+                                        
+                leftZoneItems.push(item);
+            }
+
             storage.data = JSON.stringify({
-                rightItems: rightZoneItems
+                leftItems: leftZoneItems
             });
-        }
+        }        
     });
 })();
