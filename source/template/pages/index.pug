@@ -25,7 +25,7 @@ block content
       +e.BUTTON(id="js-btn-save").button Сохранить      
     script(id="template-left" type="text/x-handlebars-template")
       | {{#each items}}
-      .main__item(draggable="true")
+      .main__item(draggable="true" data-id="{{id}}")
         img.main__img(draggable="false" src="{{photo_100}}")
         div.main__name
           | {{first_name}} {{last_name}}
@@ -33,7 +33,7 @@ block content
       | {{/each}}
     script(id="template-right" type="text/x-handlebars-template")
       | {{#each items}}
-      .main__item(draggable="true")
+      .main__item(draggable="true" data-id="{{id}}")
         img.main__img(draggable="false" src="{{photo_100}}")
         div.main__name
           | {{first_name}} {{last_name}}

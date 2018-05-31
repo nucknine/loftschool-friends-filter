@@ -1,7 +1,6 @@
 /* globals VK, Handlebars, svg4everybody */
 
 (function() {
-    
     'use strict';
 
     svg4everybody();    
@@ -62,21 +61,22 @@
         const html = render(friends);
 
         zone.innerHTML = html;
-    }
+    }    
 
     auth()
     .then(() => {
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
     .then(response => {
-        storage = localStorage;
-        if (storage.data) {
-            
+        
+        if (localStorage.data) {
+            storage = localStorage;
             loadState();
             let data = JSON.parse(storage.data),
                 filteredItems = data.rightItems;
+            
+            response = data.leftItems;            
 
-            response = data.leftItems;
             renderFriends(filteredItems, filterZone);
             storage = sessionStorage;
         } else {
@@ -191,11 +191,13 @@
         function itemsToArray (zone, array) {
             for (let i = 0; zone.children.length > i; i++) {
                 let item = {
+                    id: 0,
                     first_name: '',
                     last_name: '',
                     photo_100: ''
                 };
-    
+                
+                item.id = zone.children[i].dataset.id;
                 item.photo_100 = zone.children[i].querySelector('.main__img').getAttribute('src');
                 [item.first_name, item.last_name] = zone.children[i].querySelector('.main__name').textContent.split(' ');
                 array.push(item);
@@ -217,6 +219,6 @@
                     items: rightZoneItems
                 }
             });
-        }        
+        }
     });
 })();
