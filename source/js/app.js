@@ -44,7 +44,7 @@
     
     const resultZone = document.getElementById('js-results');
     const filterZone = document.getElementById('js-filter-zone');
-    let storage = localStorage;
+    let storage = sessionStorage;
 
     function renderFriends (friends, zone=resultZone) {
         let template;
@@ -68,10 +68,16 @@
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
     .then(response => {
-        if (storage.data) {
+        if (storage.data) {            
             loadState();
+            let data = JSON.parse(storage.data),
+                filteredItems = data.rightItems;
+
+            response = data.leftItems;
+            renderFriends(filteredItems, filterZone);
+            
         } else {
-            renderFriends(response);   
+            renderFriends(response);
         }             
 
         return response;
@@ -85,14 +91,19 @@
                 toggleIcon(e.target);                
 
                 filterZone.insertBefore(item, filterZone.lastElementChild);
+                saveState();
                 
             } else if (e.target.parentElement.classList.contains('icon-times')) {                
                 const item = e.target.parentElement.parentElement;                              
                 
                 toggleIcon(e.target);
                 resultZone.insertBefore(item, resultZone.lastElementChild);
+                saveState();
                 
-            }    
+            } else if (e.target.id == 'js-btn-save') {
+                storage = localStorage;
+                saveState();
+            }
         });
 
         document.addEventListener('dragstart', (e) => {
@@ -121,6 +132,7 @@
                 zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
                                
                 currentDrag = null;
+                saveState();
             }
         });
         
@@ -141,9 +153,9 @@
             } else {
 
                 let data = JSON.parse(storage.data);
-
-                if (data.rightItems != []) {
-                    filtered.items = filterList(data.rightItems, value);
+                
+                if (data.rightItems.items != []) {
+                    filtered.items = filterList(data.rightItems.items, value);
                     renderFriends(filtered, filterZone);
                 }
             }
@@ -169,8 +181,7 @@
                 target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#plus');
                 target.parentElement.classList.add('icon-plus');
                 target.parentElement.classList.remove('icon-times');                              
-            }     
-            saveState();
+            }                 
         }
 
         function filterList (arr, value) {
@@ -214,7 +225,12 @@
             }
 
             storage.data = JSON.stringify({
-                leftItems: leftZoneItems
+                leftItems: {
+                    items: leftZoneItems
+                },
+                rightItems: {
+                    items: rightZoneItems
+                }
             });
         }        
     });
