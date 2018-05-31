@@ -1,6 +1,7 @@
 /* globals VK, Handlebars, svg4everybody */
 
 (function() {
+    
     'use strict';
 
     svg4everybody();    
@@ -68,28 +69,29 @@
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
     .then(response => {
-        if (storage.data) {            
+        storage = localStorage;
+        if (storage.data) {
+            
             loadState();
             let data = JSON.parse(storage.data),
                 filteredItems = data.rightItems;
 
             response = data.leftItems;
             renderFriends(filteredItems, filterZone);
-            
+            storage = sessionStorage;
         } else {
             renderFriends(response);
-        }             
+        }         
 
         return response;
-    }).then((response) => {        
+    }).then((response) => {
         let currentDrag;
 
         document.addEventListener('click', e => {
             if (e.target.parentElement.classList.contains('icon-plus')) {                
                 const item = e.target.parentElement.parentElement;
-                                
-                toggleIcon(e.target);                
-
+                              
+                toggleIcon(e.target);
                 filterZone.insertBefore(item, filterZone.lastElementChild);
                 saveState();
                 
@@ -103,6 +105,7 @@
             } else if (e.target.id == 'js-btn-save') {
                 storage = localStorage;
                 saveState();
+                alert('Сохранение выполнено');
             }
         });
 
@@ -129,8 +132,7 @@
                 e.preventDefault();
 
                 toggleIcon(currentDrag.node.querySelector('use'));
-                zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
-                               
+                zone.insertBefore(currentDrag.node, e.target.nextElementSibling);                               
                 currentDrag = null;
                 saveState();
             }
@@ -140,27 +142,19 @@
             const { value } = e.target;
             let filtered = {
                 items: []
-            }
+            };
             
             if (e.target.id == 'js-input-left') {
-                filtered.items = response.items.filter( friend => {
-                    const fullName = `${friend.first_name} ${friend.last_name}`;
-    
-                    return fullName.includes(value);
-                });
-                
+                filtered.items = filterList(response.items, value);                
                 renderFriends(filtered);
             } else {
-
                 let data = JSON.parse(storage.data);
                 
-                if (data.rightItems.items != []) {
-                    filtered.items = filterList(data.rightItems.items, value);
-                    renderFriends(filtered, filterZone);
-                }
+                filtered.items = filterList(data.rightItems.items, value);
+                renderFriends(filtered, filterZone);
             }
             
-        });        
+        });
 
         function getCurrentZone(from) {
             do {
@@ -180,50 +174,41 @@
             } else if (target.parentElement.classList.contains('icon-times')) {
                 target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#plus');
                 target.parentElement.classList.add('icon-plus');
-                target.parentElement.classList.remove('icon-times');                              
-            }                 
+                target.parentElement.classList.remove('icon-times');
+            }
         }
 
         function filterList (arr, value) {
             const result = arr.filter( friend => {                    
                 const fullName = `${friend.first_name} ${friend.last_name}`;
                 
-                return fullName.includes(value);        
+                return fullName.toUpperCase().includes(value.toUpperCase());    
             });
             
             return result;
         }
 
+        function itemsToArray (zone, array) {
+            for (let i = 0; zone.children.length > i; i++) {
+                let item = {
+                    first_name: '',
+                    last_name: '',
+                    photo_100: ''
+                };
+    
+                item.photo_100 = zone.children[i].querySelector('.main__img').getAttribute('src');
+                [item.first_name, item.last_name] = zone.children[i].querySelector('.main__name').textContent.split(' ');
+                array.push(item);
+            }
+        }
+
         function saveState() {
             let rightZoneItems = [];
             let leftZoneItems = [];
+
+            itemsToArray(filterZone, rightZoneItems);
+            itemsToArray(resultZone, leftZoneItems);
             
-            for (let i = 0; filterZone.children.length > i; i++) {
-                let item = {
-                    first_name: '',
-                    last_name: '',
-                    photo_100: ''
-                };
-    
-                item.photo_100 = filterZone.children[i].querySelector('.main__img').getAttribute('src');
-                [item.first_name, item.last_name] = filterZone.children[i].querySelector('.main__name').textContent.split(' ');
-                                        
-                rightZoneItems.push(item);
-            }
-
-            for (let i = 0; resultZone.children.length > i; i++) {
-                let item = {
-                    first_name: '',
-                    last_name: '',
-                    photo_100: ''
-                };
-    
-                item.photo_100 = resultZone.children[i].querySelector('.main__img').getAttribute('src');
-                [item.first_name, item.last_name] = resultZone.children[i].querySelector('.main__name').textContent.split(' ');
-                                        
-                leftZoneItems.push(item);
-            }
-
             storage.data = JSON.stringify({
                 leftItems: {
                     items: leftZoneItems
