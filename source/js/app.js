@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    svg4everybody();    
+    svg4everybody();
 
     VK.init({
         apiId: 6487685
@@ -11,7 +11,7 @@
 
     function loadState() {
         let data = JSON.parse(storage.data);
-        
+
         renderFriends(data.rightItems, filterZone);
         renderFriends(data.leftItems);
     }
@@ -41,7 +41,7 @@
             });
         })
     }
-    
+
     const resultZone = document.getElementById('js-results');
     const filterZone = document.getElementById('js-filter-zone');
     let storage = sessionStorage;
@@ -56,52 +56,52 @@
         } else {
             template = document.querySelector('#template-right').textContent;
         }
-        
+
         const render = Handlebars.compile(template);
         const html = render(friends);
 
         zone.innerHTML = html;
-    }    
+    }
 
     auth()
     .then(() => {
         return callAPI('friends.get', { fields: 'city, country, photo_100' });
     })
     .then(response => {
-        
+
         if (localStorage.data) {
             storage = localStorage;
             loadState();
             let data = JSON.parse(storage.data),
                 filteredItems = data.rightItems;
-            
-            response = data.leftItems;            
+
+            response = data.leftItems;
 
             renderFriends(filteredItems, filterZone);
             storage = sessionStorage;
         } else {
             renderFriends(response);
-        }         
+        }
 
         return response;
     }).then((response) => {
         let currentDrag;
 
         document.addEventListener('click', e => {
-            if (e.target.parentElement.classList.contains('icon-plus')) {                
+            if (e.target.parentElement.classList.contains('icon-plus')) {
                 const item = e.target.parentElement.parentElement;
-                              
+
                 toggleIcon(e.target);
                 filterZone.insertBefore(item, filterZone.lastElementChild);
                 saveState();
-                
-            } else if (e.target.parentElement.classList.contains('icon-times')) {                
-                const item = e.target.parentElement.parentElement;                              
-                
+
+            } else if (e.target.parentElement.classList.contains('icon-times')) {
+                const item = e.target.parentElement.parentElement;
+
                 toggleIcon(e.target);
                 resultZone.insertBefore(item, resultZone.lastElementChild);
                 saveState();
-                
+
             } else if (e.target.id == 'js-btn-save') {
                 storage = localStorage;
                 saveState();
@@ -132,28 +132,28 @@
                 e.preventDefault();
 
                 toggleIcon(currentDrag.node.querySelector('use'));
-                zone.insertBefore(currentDrag.node, e.target.nextElementSibling);                               
+                zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
                 currentDrag = null;
                 saveState();
             }
         });
-        
+
         document.addEventListener('input', (e) => {
             const { value } = e.target;
             let filtered = {
                 items: []
             };
-            
+
             if (e.target.id == 'js-input-left') {
-                filtered.items = filterList(response.items, value);                
+                filtered.items = filterList(response.items, value);
                 renderFriends(filtered);
             } else {
                 let data = JSON.parse(storage.data);
-                
+
                 filtered.items = filterList(data.rightItems.items, value);
                 renderFriends(filtered, filterZone);
             }
-            
+
         });
 
         function getCurrentZone(from) {
@@ -165,12 +165,12 @@
 
             return null;
         }
-        
+
         function toggleIcon(target) {
             if (target.parentElement.classList.contains('icon-plus')) {
                 target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#times');
                 target.parentElement.classList.add('icon-times');
-                target.parentElement.classList.remove('icon-plus');                
+                target.parentElement.classList.remove('icon-plus');
             } else if (target.parentElement.classList.contains('icon-times')) {
                 target.setAttribute('xlink:href', '/assets/img/sprites/sprite.svg#plus');
                 target.parentElement.classList.add('icon-plus');
@@ -179,12 +179,12 @@
         }
 
         function filterList (arr, value) {
-            const result = arr.filter( friend => {                    
+            const result = arr.filter( friend => {
                 const fullName = `${friend.first_name} ${friend.last_name}`;
-                
-                return fullName.toUpperCase().includes(value.toUpperCase());    
+
+                return fullName.toUpperCase().includes(value.toUpperCase());
             });
-            
+
             return result;
         }
 
@@ -196,7 +196,7 @@
                     last_name: '',
                     photo_100: ''
                 };
-                
+
                 item.id = zone.children[i].dataset.id;
                 item.photo_100 = zone.children[i].querySelector('.main__img').getAttribute('src');
                 [item.first_name, item.last_name] = zone.children[i].querySelector('.main__name').textContent.split(' ');
@@ -210,7 +210,7 @@
 
             itemsToArray(filterZone, rightZoneItems);
             itemsToArray(resultZone, leftZoneItems);
-            
+
             storage.data = JSON.stringify({
                 leftItems: {
                     items: leftZoneItems
