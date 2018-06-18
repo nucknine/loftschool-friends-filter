@@ -1,10 +1,10 @@
 
-.box {  
+.box {
     display: flex;
     flex-wrap: wrap;
     width: 620px;
-    height: 490px;    
-    margin: 50px auto;   
+    height: 490px;
+    margin: 50px auto;
     overflow: hidden;
     border-radius: 7px;
 }
@@ -31,8 +31,8 @@
             font-size: 18px;
             color: $white;
             cursor: pointer;
-        }        
-    }        
+        }
+    }
 }
 
 .filter-section {
@@ -45,8 +45,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 50%;        
-    }    
+        width: 50%;
+    }
     &__input {
         width: 285px;
         height: 26px;
@@ -59,7 +59,7 @@
         padding-left: 15px;
         &_left {
             padding-left: 27px;
-        }     
+        }
     }
     & .icon-search {
         position: absolute;
@@ -69,7 +69,7 @@
         color: $search-icon;
         cursor: pointer;
     }
-}    
+}
 
 .main {
     background: $white;
@@ -78,7 +78,7 @@
     display: flex;
     flex-basis: 100%;
     &__half {
-        padding: 0 5px 0 15px;   
+        padding: 0 5px 0 15px;
         display: flex;
         flex-basis: 50%;
         flex-wrap: wrap;
@@ -92,12 +92,12 @@
         overflow-y: scroll;
         display: flex;
         align-content: start;
-        flex-wrap: wrap; 
+        flex-wrap: wrap;
         &::-webkit-scrollbar {
             width: 3px;
-        }                
-        &::-webkit-scrollbar-thumb {            
-            background-color: $dark-gray;          
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $dark-gray;
         }
     }
     &__title {
@@ -114,13 +114,13 @@
     &__item {
         position: relative;
         margin-right: 6px;
-        padding: 0 0;   
+        padding: 0 0;
         display: flex;
-        width: 100%; 
-        height: 60px;     
+        width: 100%;
+        height: 60px;
         justify-content: flex-start;
         align-items: center;
-        cursor: move;        
+        cursor: move;
         user-select: none;
         border-bottom: 1px solid $gray;
         transition: all 0.3s ease-in-out;
@@ -165,7 +165,7 @@
         border-radius: 50%;
         -webkit-user-drag: none;
         user-drag: none;
-        user-select: none;                   
+        user-select: none;
         }
     &__name {
         margin-left: 7px;
